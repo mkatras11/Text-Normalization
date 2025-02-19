@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_chroma import Chroma
 from langchain_core.example_selectors import SemanticSimilarityExampleSelector
 from text_norm_LLM.schemas import NormalizedTextResponse
-
+from text_norm_LLM.prompts import PROMPT_TEMP, FEW_SHOT_PRE, FEW_SHOT_SUF
 
 
 
@@ -18,15 +18,15 @@ class TextNormalizer:
         # Load examples if provided
         self.examples = examples if examples else []
         
-        # Initialize example selector once
+        # Initialize example selector
         self.example_selector = self._initialize_example_selector()
 
     def _initialize_llm(self) -> ChatOpenAI:
-        """Initialize and cache the LLM to avoid repeated initialization."""
+        """Initialize the LLM to avoid repeated initialization."""
         return ChatOpenAI(temperature=0, openai_api_key=self.openai_api_key, model=self.model)
 
     def _initialize_example_selector(self) -> SemanticSimilarityExampleSelector:
-        """Initialize the example selector once and reuse it."""
+        """Initialize the example selector."""
         return SemanticSimilarityExampleSelector.from_examples(
             self.examples,
             OpenAIEmbeddings(),
@@ -36,7 +36,7 @@ class TextNormalizer:
 
     @staticmethod
     def load_examples(file_path: str) -> List[Dict[str, str]]:
-        """Load examples from a CSV file and cache the result."""
+        """Load examples from a CSV file in the format of a list of dictionaries."""
         examples = pd.read_csv(file_path).to_dict(orient="records")
         for example in examples:
             for key, value in example.items():
@@ -46,36 +46,21 @@ class TextNormalizer:
 
     def _create_prompt_template(self) -> FewShotPromptTemplate:
         """Create a FewShotPromptTemplate for text normalization using the preloaded example selector."""
-        prompt_example = PromptTemplate.from_template("""
-            Raw text to normalize:
-            {raw_comp_writers_text}
-
-            Normalized text:
-            {CLEAN_TEXT}
-        """)
+        prompt_example = PromptTemplate.from_template(PROMPT_TEMP)
 
         return FewShotPromptTemplate(
             example_selector=self.example_selector,
             example_prompt=prompt_example,
             input_variables=["query"],
-            prefix="""
-            You are an expert in the music industry. 
-            Your task is to normalize writer names by removing redundant information.
-            Below are some examples of raw composer/writer names and their normalized versions:
-            Note: 
-            - dont include the same name twice in the normalized version
-            - Account for non-latin characters
-            """,
-            suffix="""Normalize the following:
-            {query}""",
+            prefix=FEW_SHOT_PRE,
+            suffix=FEW_SHOT_SUF,
         )
 
     def normalize_text(self, query: str) -> NormalizedTextResponse:
-        """Normalize the input query using the cached example selector."""
+        """Normalize the input query using the example selector."""
         prompt_template = self._create_prompt_template()
         structured_llm = self.llm.with_structured_output(NormalizedTextResponse)
 
-        print(prompt_template.invoke({"query": query}).to_string())
         chain = prompt_template | structured_llm
 
         return chain.invoke({"query": query})

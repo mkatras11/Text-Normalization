@@ -1,3 +1,4 @@
+"A module to preprocess text data by removing noisy names, cleaning delimiters, and handling empty rows."
 import re
 import pandas as pd
 
@@ -6,7 +7,7 @@ class TextPreprocessor:
     A class to preprocess text data by removing noisy names, cleaning delimiters, and handling empty rows.
     """
 
-    # Define noisy names to be removed
+    # Define noisy names to remove from the text
     NOISY_NAMES = [
         r'<Unknown>', r'Copyright Control', r'Traditional', r'COPYRIGHT CONTROL', 
         r'\[traditional\]', r'WRITER UNKNOWN', r'Not Documented', 
@@ -28,27 +29,26 @@ class TextPreprocessor:
         Returns:
             str: The cleaned and preprocessed text.
         """
-        # If the input is not a string, return it as-is
+        # If the input is not a string, return it as-is (e.g., for NaN values)
         if not isinstance(text, str):
             return text
 
-        # Step 1: Remove noisy names
+        # Remove noisy names
         for noisy in self.NOISY_NAMES:
             text = re.sub(noisy, '', text, flags=re.IGNORECASE)
 
-        # Step 2: Remove extra delimiters at the end
+        # Remove extra delimiters
         text = re.sub(r'[/,]\s*$', '', text)
 
-        # Step 3: Remove double delimiters (e.g., //)
+        # Remove double delimiters (e.g., //)
         text = re.sub(r'//', '/', text)
 
-        # Step 4: Remove leading and trailing delimiters
+        # Remove leading and trailing delimiters
         text = re.sub(r'^/|/$', '', text)
 
-        # Step 5: Strip leading/trailing whitespace
+        # Strip leading/trailing whitespace
         text = text.strip()
 
-        # Return the cleaned text (or empty string if nothing is left)
         return text if text else ""
 
     def preprocess_column(self, df: pd.DataFrame, column_name: str) -> pd.DataFrame:
@@ -57,7 +57,7 @@ class TextPreprocessor:
         and removing empty rows.
 
         Args:
-            df (pd.DataFrame): The DataFrame containing the text columns.
+            df (pd.DataFrame): The DataFrame containing the text column.
             column_name (str): The name of the column to preprocess.
 
         Returns:
@@ -81,7 +81,6 @@ class TextPreprocessor:
         # Split the data into examples and test sets
         df_examples = df.sample(frac=0.01, random_state=200)
         df_test = df.drop(df_examples.index)
-
         # Save the cleaned DataFrames to CSV files
         df_examples.to_csv(examples_path, index=False)
         df_test.to_csv(test_path, index=False)
