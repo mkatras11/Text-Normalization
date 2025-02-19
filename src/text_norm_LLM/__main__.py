@@ -1,4 +1,5 @@
 import os
+import argparse
 from pathlib import Path
 import dotenv
 import pandas as pd
@@ -6,7 +7,7 @@ from .text_norm import TextNormalizer
 from .data_preproc import TextPreprocessor
 
 
-def main():
+def main(text: str):
     # Load environment variables
     dotenv.load_dotenv()
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -41,17 +42,20 @@ def main():
     normalizer = TextNormalizer(openai_api_key=OPENAI_API_KEY, examples=examples)
 
     # Normalize a query
-    query = "Day & Murray (Bowles, Gaudet, Middleton & Shanahan)"
+    query = text
     query = TextPreprocessor().preprocess_text(query)
 
     if query:
         response = normalizer.normalize_text(query)
         for normalized_text in response.normalized_text:
             print(f"Normalized Text: {normalized_text.CLEAN_TEXT}")
-
     else:
         print("Normalized Text: nan")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Run text normalization on input text.")
+    parser.add_argument("text", type=str, help="The text to normalize")
+
+    args = parser.parse_args()
+    main(args.text)
