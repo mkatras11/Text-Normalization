@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 from text_norm_LLM.text_norm import TextNormalizer
 from text_norm_LLM.data_preproc import TextPreprocessor
-from sklearn.metrics import accuracy_score
 
 def calculate_accuracy(ground_truths, predictions):
     """
