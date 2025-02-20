@@ -19,7 +19,7 @@ class TextPreprocessor:
     def preprocess_text(self, text: str) -> str:
         """
         Preprocesses a single string by:
-        1. Removing noisy names.
+        1. Removing frequently used noisy names.
         2. Cleaning extra delimiters.
         3. Removing leading/trailing delimiters and spaces.
 
@@ -29,7 +29,7 @@ class TextPreprocessor:
         Returns:
             str: The cleaned and preprocessed text.
         """
-        # If the input is not a string, return it as-is (e.g., for NaN values)
+        # If the input is not a string, return it as is
         if not isinstance(text, str):
             return text
 
@@ -53,7 +53,7 @@ class TextPreprocessor:
 
     def preprocess_column(self, df: pd.DataFrame, column_name: str) -> pd.DataFrame:
         """
-        Preprocesses a text column in a DataFrame by removing noisy names, cleaning delimiters,
+        Preprocesses a text column in a DataFrame by removing frequently used noisy names, cleaning delimiters,
         and removing empty rows.
 
         Args:
@@ -81,6 +81,10 @@ class TextPreprocessor:
         # Split the data into examples and test sets
         df_examples = df.sample(frac=0.01, random_state=200)
         df_test = df.drop(df_examples.index)
+        # get 1000 samples for testing the solution
+        df_test = df_test.sample(n=1000, random_state=200)
+        # drop rows with np.nan values in CLEAN_TEXT column
+        df_test = df_test.dropna(subset=['CLEAN_TEXT'])
         # Save the cleaned DataFrames to CSV files
         df_examples.to_csv(examples_path, index=False)
         df_test.to_csv(test_path, index=False)

@@ -1,10 +1,11 @@
 import os
 import argparse
+import numpy as np
 from pathlib import Path
 import dotenv
 import pandas as pd
-from .text_norm import TextNormalizer
-from .data_preproc import TextPreprocessor
+from text_norm_LLM.text_norm import TextNormalizer
+from text_norm_LLM.data_preproc import TextPreprocessor
 
 
 def main(text: str):
@@ -50,7 +51,7 @@ def main(text: str):
         for normalized_text in response.normalized_text:
             print(f"Normalized Text: {normalized_text.CLEAN_TEXT}")
     else:
-        print("Normalized Text: nan")
+        print("Normalized Text:", np.nan)
 
 
 if __name__ == "__main__":
