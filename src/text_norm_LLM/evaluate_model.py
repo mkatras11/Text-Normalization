@@ -77,7 +77,7 @@ def evaluate_model(csv_path: Path, normalizer: TextNormalizer) -> float:
     pred['ground_truth'] = ground_truth
 
     #save predictions
-    path = Path("data") / "evaluation"
+    path = Path("data") / "evaluation_llm"
     path.mkdir(parents=True, exist_ok=True)
     failed_pred = pred[pred['predicted'] != pred['ground_truth']]
     correct_pred = pred[pred['predicted'] == pred['ground_truth']]  
