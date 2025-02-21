@@ -1,3 +1,4 @@
+" A module to normalize text data using a structured output model llm with semantic few-shot learning. "
 from typing import List, Dict
 import pandas as pd
 from langchain.prompts import PromptTemplate, FewShotPromptTemplate

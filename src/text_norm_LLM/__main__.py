@@ -1,3 +1,4 @@
+" Main module for the text_norm_LLM package. "
 import os
 import argparse
 import numpy as np

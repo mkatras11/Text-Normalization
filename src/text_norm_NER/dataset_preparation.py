@@ -1,3 +1,4 @@
+" A module to preprocess and prepare the dataset for training a Named Entity Recognition (NER) model with spaCy. "
 import re
 import json
 import pandas as pd

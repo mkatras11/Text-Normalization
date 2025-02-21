@@ -1,3 +1,4 @@
+" A module to evaluate the model on a test set and calculate the accuracy. "
 import os
 from pathlib import Path
 import dotenv

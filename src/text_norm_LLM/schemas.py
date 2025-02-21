@@ -1,3 +1,4 @@
+" Pydantic models for the structured output of the text normalization model. "
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
