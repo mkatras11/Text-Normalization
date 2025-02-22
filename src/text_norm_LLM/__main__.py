@@ -1,7 +1,6 @@
 " Main module for the text_norm_LLM package. "
 import os
 import argparse
-import numpy as np
 from pathlib import Path
 import dotenv
 import pandas as pd
@@ -9,7 +8,7 @@ from text_norm_LLM.text_norm import TextNormalizer
 from text_norm_LLM.data_preproc import TextPreprocessor
 
 
-def main(text: str):
+def main(text: str) -> None:
     # Load environment variables
     dotenv.load_dotenv()
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -52,7 +51,9 @@ def main(text: str):
         for normalized_text in response.normalized_text:
             print(f"Normalized Text: {normalized_text.CLEAN_TEXT}")
     else:
-        print("Normalized Text:", np.nan)
+        print("Normalized Text:", "")
+    
+    return normalized_text.CLEAN_TEXT
 
 
 if __name__ == "__main__":
