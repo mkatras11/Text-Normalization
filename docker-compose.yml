@@ -10,6 +10,9 @@ services:
       - "8080:8080"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_ENDPOINT=http://fastapi:8080/normalize_llm
+      - NER_ENDPOINT=http://fastapi:8080/normalize_ner
+
   streamlit:
     build:
       context: .
@@ -17,3 +20,6 @@ services:
     container_name: streamlit_app
     ports:
       - "8501:8501"
+    environment:
+      - LLM_ENDPOINT=http://fastapi:8080/normalize_llm
+      - NER_ENDPOINT=http://fastapi:8080/normalize_ner

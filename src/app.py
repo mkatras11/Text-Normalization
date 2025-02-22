@@ -73,7 +73,6 @@ async def normalize_llm(request: TextRequest):
 async def normalize_ner(request: TextRequest):
     dataset_prep = DatasetPrep()
     cleaned_text = dataset_prep.preprocess_text(request.text)
-    print(cleaned_text)
     doc = nlp(cleaned_text)
     entities = [ent.text for ent in doc.ents if ent.label_ == "PERSON"]
 

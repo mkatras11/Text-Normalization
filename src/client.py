@@ -1,8 +1,10 @@
 import streamlit as st
 import requests
+import os
 
-LLM_ENDPOINT = "http://localhost:8080/normalize_llm"
-NER_ENDPOINT = "http://localhost:8080/normalize_ner"
+# Get the endpoints from environment variables with default values for local development
+LLM_ENDPOINT = os.getenv("LLM_ENDPOINT", "http://localhost:8080/normalize_llm")
+NER_ENDPOINT = os.getenv("NER_ENDPOINT", "http://localhost:8080/normalize_ner")
 
 def normalize_text_llm(text):
     response = requests.post(LLM_ENDPOINT, json={"text": text})

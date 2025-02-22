@@ -3,7 +3,6 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install the dependencies
 RUN pip install --no-cache-dir streamlit==1.42.2
 
 COPY ./src/client.py /app
