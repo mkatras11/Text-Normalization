@@ -41,6 +41,9 @@ class DatasetPrep:
         if not isinstance(text, str):
             return text
 
+        # remove leading and trailing quotes
+        text = re.sub(r'^"|"$', '', text)
+
         # Remove noisy names
         for noisy in self.NOISY_NAMES:
             text = re.sub(noisy, '', text, flags=re.IGNORECASE)
