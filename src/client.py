@@ -1,9 +1,8 @@
 import streamlit as st
 import requests
 
-# FastAPI endpoints
-LLM_ENDPOINT = "http://localhost:8000/normalize_llm"
-NER_ENDPOINT = "http://localhost:8000/normalize_ner"
+LLM_ENDPOINT = "http://localhost:8080/normalize_llm"
+NER_ENDPOINT = "http://localhost:8080/normalize_ner"
 
 def normalize_text_llm(text):
     response = requests.post(LLM_ENDPOINT, json={"text": text})
@@ -21,7 +20,6 @@ def normalize_text_ner(text):
         st.error(f"Error: {response.status_code} - {response.text}")
         return ""
 
-# Streamlit UI
 st.title("Text Normalization")
 
 model_choice = st.radio(

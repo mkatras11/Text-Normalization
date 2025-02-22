@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi_app
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+  streamlit:
+    build:
+      context: .
+      dockerfile: Streamlit.dockerfile
+    container_name: streamlit_app
+    ports:
+      - "8501:8501"

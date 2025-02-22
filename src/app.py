@@ -82,7 +82,3 @@ async def normalize_ner(request: TextRequest):
         return {"normalized_text": joined_entities}
     else:
         return {"normalized_text": ""}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
