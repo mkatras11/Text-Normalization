@@ -2,7 +2,7 @@ import gdown
 import sys
 
 # Google Drive file URL (zipped file)
-URL = "https://drive.google.com/uc?id=1KEd0HTRLHN_4TFbVc_uviW13JIc22hea"
+URL = " https://drive.google.com/uc?id=12bZiqcEYVmAe1pS94oHNgKmjFsZkhCYI"
 
 def main():
     if len(sys.argv) >= 2:
