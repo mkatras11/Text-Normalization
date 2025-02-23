@@ -40,16 +40,16 @@ OPENAI_API_KEY= <your_api_key_here>
 ## Running the Application
 
 ### Running with Docker
-To run the application using Docker, run the following command on the root directory of the project:
+To run the application using Docker, run the following command in the root directory of the project:
 ```bash
 docker compose up # or docker-compose up
 ```
 Access the application via the following link: [http://localhost:8501/](http://localhost:8501/)
 
-You can chooce the model of your preference from the menu and input the text you want to normalize.
+You can choose the model of your preference from the menu and input the text you want to normalize.
 
 ### Running Locally
-First you need to download the model by running the following command:
+Firstly, you need to download the model by running the following command:
 ```bash
 python get_model.py
 ```
@@ -58,7 +58,7 @@ Then you need to install the model with `pip`. To do so, run the following comma
 ```bash
 pip install ./model.tar.gz
 ```
-To run the application locally, run the following command on the root directory of the project:
+To run the application locally, run the following command in the root directory of the project:
 ```bash
 cd src
 uvicorn app:app --host 0.0.0.0 --port 8080
