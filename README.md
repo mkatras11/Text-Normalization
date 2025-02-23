@@ -4,6 +4,7 @@ Text Normalization is a Python project aimed to normalize the raw composition wr
 <p align="center">
     <img src="app.gif" alt="Text Normalization" width="60%">
 </p>
+
 ---
 ## Dataset
 The [dataset](src/data/normalization_assesment_dataset_10k.csv) provided is a CSV file containing 10000 raw compositions from writers' texts and the normalized version:
