@@ -104,5 +104,5 @@ python -m text_norm_LLM.evaluate_model
 ## Testing
 To run the tests, run the following command:
 ```bash
-pytest tests/
+pytest tests\test_data_preproc.py
 ```
