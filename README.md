@@ -51,6 +51,7 @@ docker compose up # or docker-compose up
 Access the application via the following link: [http://localhost:8501/](http://localhost:8501/)
 
 You can choose the model of your preference from the menu and input the text you want to normalize.
+The LLM model can also take multiple inputs separated with a new line.
 
 ### Running Locally
 Firstly, you need to download the model by running the following command:
