@@ -69,6 +69,40 @@ streamlit run src/client.py
 ```
 
 
+## Retraining the NER model
 
-### Retraining the NER model
+### Dataset Preparation
+To prepare the dataset for training the NER model, run the following command:
+```bash
+cd src
+python -m text_norm_NER.dataset_preparation
+```
+This will split the data into training, testing and validation sets, transform the data into the required format for training the model, and save the data in the `data/data_ner` directory.
 
+### Retraining
+To retrain the NER model, you can follow the instructions in the [notebook](src/text_norm_NER/retraining_spacy.ipynb).
+
+
+## Inference and Evaluation
+
+### NER Model
+To inference with the retrained NER model, run the following command:
+```bash
+python -m text_norm_NER "text to normalize"
+```
+
+### LLM Model
+To inference with the LLM model, run the following command:
+```bash
+python -m text_norm_LLM "text to normalize"
+```
+To evaluate the LLM model, run the following command:
+```bash
+python -m text_norm_LLM.evaluate_model
+```
+
+## Testing
+To run the tests, run the following command:
+```bash
+pytest tests/
+```
