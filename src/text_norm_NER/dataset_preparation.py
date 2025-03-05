@@ -155,9 +155,6 @@ class DatasetPrep:
         val_df.to_csv(main_path / "val.csv", index=False)
         df.to_csv(main_path / "cleaned.csv", index=False)
 
-        # Extract unique names from the 'CLEAN_TEXT' column
-        names_clean = self.extract_unique_names(df, 'CLEAN_TEXT')
-
         # Transform the datasets into SpaCy format
         spacy_train_data = self.transform_to_spacy_format(train_df, names_clean)
         spacy_test_data = self.transform_to_spacy_format(test_df, names_clean)
