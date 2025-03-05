@@ -217,7 +217,7 @@ class DatasetPrep:
 
     def data_preprocessing(self, data: dict, spacy_model: spacy.language.Language) -> DocBin:
         """
-        Preprocesses data in the training format, including Named Entity Recognition (NER) and Part-of-Speech (POS) tagging.
+        Preprocesses data in the training format for Named Entity Recognition (NER).
 
         Parameters:
             data (dict): Data in the SpaCy training format.
